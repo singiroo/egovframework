@@ -6,7 +6,7 @@
 <form-validation>
 
     <formset>
-        <form name="sampleVO">
+        <!-- <form name="sampleVO">
         	<field property="name" depends="required">
         		<arg0 key="title.sample.name" />
 			</field>
@@ -15,6 +15,24 @@
             </field>
         	<field property="regUser" depends="required">
         		<arg0 key="title.sample.regUser" />
+			</field>
+			조건 추가시 ,로 구분
+        </form> -->
+        <form name="boardVO">
+        	<field property="title" depends="required">
+        		<arg0 key="제목" />
+			</field>
+			<field property="contents" depends="required">
+                <arg0 key="내용" />
+            </field>
+        	<field property="wirter" depends="required">
+        		<arg0 key="작성자" />
+			</field>
+        	<field property="userPassword" depends="required">
+        		<arg0 key="비밀번호" />
+			</field>
+        	<field property="openYn" depends="required">
+        		<arg0 key="공개여부" />
 			</field>
         </form>
     </formset>

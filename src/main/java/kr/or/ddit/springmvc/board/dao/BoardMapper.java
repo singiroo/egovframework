@@ -18,4 +18,8 @@ public interface BoardMapper {
 	int update(BoardVO boardVO) throws Exception;
 	
 	int delete(BoardVO boardVO) throws Exception;
+	
+	int selectBoardListTotCnt(BoardVO boardVO) throws Exception;
+	
+	List<BoardVO> retrievePagingList(BoardVO boardVO) throws Exception; 
 }

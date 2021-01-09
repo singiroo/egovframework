@@ -10,8 +10,16 @@ public class BoardVO extends BaseVO {
 	private String writer; 
 	private String userPassword; 
 	private String openYn;
+	private String saveToken;
 	
-	  
+	
+  
+	public String getSaveToken() {
+		return saveToken;
+	}
+	public void setSaveToken(String saveToken) {
+		this.saveToken = saveToken;
+	}
 	public String getBoardSn() {
 		return boardSn;
 	}

@@ -16,8 +16,15 @@
 package kr.or.ddit.springmvc.base.vo;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Iterator;
+import java.util.Map;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import kr.or.ddit.springmvc.board.vo.BoardVO;
 
 /**
  * @Class Name : SampleDefaultVO.java
@@ -144,6 +151,30 @@ public class BaseVO implements Serializable {
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
+	}
+	
+	public void preparePaginationInfo(PaginationInfo paginationInfo) {
+		  paginationInfo.setCurrentPageNo(this.getPageIndex());
+	      paginationInfo.setRecordCountPerPage(this.getPageUnit());
+	      paginationInfo.setPageSize(this.getPageSize());
+
+	      this.setFirstIndex(paginationInfo.getFirstRecordIndex());
+	      this.setLastIndex(paginationInfo.getLastRecordIndex());
+	      this.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+	}
+	
+	public void copySearchCondition(BaseVO baseVO)
+			throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+		Map<String, String> describeMap = BeanUtils.describe(baseVO);
+		  Iterator<String> describeIterator = describeMap.keySet().iterator();
+		  while(describeIterator.hasNext()) {
+			  String key = describeIterator.next();
+			  
+			  if(key.startsWith("search") || key.startsWith("page")) {
+				  BeanUtils.copyProperty(this, key, describeMap.get(key));
+			  }
+			  
+		  }
 	}
 
 }

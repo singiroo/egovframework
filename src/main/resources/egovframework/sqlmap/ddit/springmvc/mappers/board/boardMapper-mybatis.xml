@@ -66,4 +66,53 @@
 	</select>
 	
 	
+	<select id="retrievePagingList" resultType="kr.or.ddit.springmvc.board.vo.BoardVO">
+      SELECT A.*
+   FROM (
+   SELECT ROWNUM RNUM, S.*
+   FROM (
+      SELECT BOARD_SN,
+            TITLE,
+            CONTENTS,
+            WRITER,
+            USER_PASSWORD,
+            OPEN_YN
+      FROM TB_BOARD
+      <where>
+         <if test="searchCondition != null and searchCondition != ''">
+            <choose>
+               <when test="searchCondition == 0">
+                  AND TITLE LIKE '%'|| #{searchKeyword}||'%'
+               </when>
+               <when test="searchCondition == 1">
+                  AND TITLE LIKE '%'|| #{searchKeyword}||'%'
+               </when>
+            </choose>
+         </if>
+      </where>
+      ORDER BY BOARD_SN DESC
+      )S
+      )A
+      <![CDATA[WHERE RNUM <= #{lastIndex} and RNUM > #{firstIndex}]]>
+   </select>
+   
+   <select id="selectBoardListTotCnt" resultType="java.lang.Integer" parameterType="kr.or.ddit.springmvc.board.vo.BoardVO" >
+      SELECT COUNT(*) totCnt
+      FROM TB_BOARD
+      <where>
+         <if test="searchCondition != null and searchCondition != ''">
+            <choose>
+               <when test="searchCondition == 0">
+                  AND TITLE LIKE '%'|| #{searchKeyword}||'%'
+               </when>
+               <when test="searchCondition == 1">
+                  AND TITLE LIKE '%'|| #{searchKeyword}||'%'
+               </when>
+            </choose>
+         </if>
+      </where>
+   </select>
+   
+	
+	
 </mapper>
